@@ -5,7 +5,7 @@ message = input("Enter your message:") #Read message to be sent
 
 # Create a UDP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-server_address = ('aquapi-main', 6400) #Server's IP Adress and Port Number for Communication.
+server_address = ('192.168.0.21', 6400) #Server's IP Adress and Port Number for Communication.
 
 try:
 
