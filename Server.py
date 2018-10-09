@@ -5,7 +5,7 @@ import sys
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 # Bind the socket to the port
-server_address = ("aquapi-main", 6401) #Server's IP Adress and Port Number for Communication.
+server_address = ("192.168.0.21", 6401) #Server's IP Adress and Port Number for Communication.
 print (sys.stderr, 'starting up on %s port %s' % server_address)
 sock.bind(server_address)
 
