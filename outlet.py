@@ -8,7 +8,7 @@ def updateOutletRates(filepath):
     with open(filepath, 'a+') as file:
         file.write(str(datetime.datetime.now().replace(microsecond=0)) + "," + data_value + "\r\n")
 
-def updateGlobalRates():
+def updateGlobalRates(filepath):
     with open(filepath, 'r') as file:
         data = file.readlines()
     
@@ -25,8 +25,8 @@ def updateGlobalRates():
     with open(filepath, 'w') as file:
         file.writelines(data)
 
-def updateGlobalTotals():
-    with open('totals/global.csv', 'r') as file:
+def updateTotals(filepath):
+    with open(filepath, 'r') as file:
         data = file.readlines()
     
     print(data)
@@ -35,11 +35,12 @@ def updateGlobalTotals():
     data_value = rate / 60
     new_data_value = float(data[line_number[0]].replace(outlet_name + ",", "")) + float(data_value)
     
-    # change data value
+    # change data value for specific outlet & whole home
     data[line_number[0]] = outlet_name + "," + str(new_data_value) + "\n"
+    data[1] = "global," + str(float(data[1].replace("global,", "")) + float(data_value)) + "\n"
     
     # update file
-    with open('totals/global.csv', 'w') as file:
+    with open(filepath, 'w') as file:
         file.writelines(data)
 
 # setup GPIO input from flowmeter
@@ -65,7 +66,7 @@ while True:
     updateGlobalRates("rates/daily/global.csv")
     updateGlobalRates("rates/weekly/global.csv")
     updateGlobalRates("rates/monthly/global.csv")
-    updateGlobalTotals("totals/daily/global.csv")
-    updateGlobalTotals("totals/weekly/global.csv")
-    updateGlobalTotals("totals/monthly/global.csv")
+    updateTotals("totals/daily.csv")
+    updateTotals("totals/weekly.csv")
+    updateTotals("totals/monthly.csv")
     time.sleep(60.0 - ((time.time() - starttime) % 60.0))
